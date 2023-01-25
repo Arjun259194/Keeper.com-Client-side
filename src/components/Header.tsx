@@ -32,8 +32,9 @@ const Header: React.FC<props> = ({ children }) => {
           style={{
             transform: showMenu ? "scale(1)" : "scale(0)",
           }}
-          className="absolute sm:static top-2/3 right-0 rounded bg-white sm:bg-transparent p-2 sm:p-0 text-2xl sm:text-base flex flex-col sm:flex-row
-           items-center capitalize [&>li]:mb-2 sm:[&>li]:ml-6 transition-transform duration-150 ease-in-out origin-top-right "
+          className="absolute sm:static top-2/3 right-0 rounded bg-white sm:bg-transparent p-2 sm:p-0 text-2xl 
+          sm:text-xl flex flex-col sm:flex-row items-center capitalize [&>li]:mb-2 sm:[&>li]:ml-6
+          transition-transform duration-150 ease-in-out origin-top-right z-10"
         >
           {children}
         </ul>

@@ -7,3 +7,11 @@
 body {
   @apply bg-smokewhite;
 }
+
+::selection {
+  @apply bg-prime;
+}
+
+input {
+  @apply caret-sec;
+}

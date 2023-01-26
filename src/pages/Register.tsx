@@ -1,9 +1,11 @@
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { Link } from "react-router-dom"
 import bulbImage from "../assets/3D-bulb.png"
 import docImage from "../assets/3D-docu.png"
+import { loadingArrow } from "../assets/icons"
 import ButtonPrime from "../components/ButtonPrime"
 import FormInput from "../components/FormInput"
+import useFetch from "../hooks/useFetch"
 import useInput from "../hooks/useInput"
 
 const Register: FC = () => {
@@ -12,18 +14,32 @@ const Register: FC = () => {
     password = useInput(""),
     confPassword = useInput("")
 
+  const url = new URL("/auth/register", import.meta.env.VITE_API_URL)
+
+  const { loading, data, refresh, statusCode } = useFetch({
+    url: url.href,
+    method: "POST",
+    data: {
+      email: email.value,
+      name: name.value,
+      password: password.value,
+    },
+    start: false,
+  })
+
   const submitHandler = async (event: React.FormEvent): Promise<void> => {
     event.preventDefault()
-    console.table({
-      name,
-      email,
-      password,
-      confPassword,
-    })
+    if (password.value !== confPassword.value) {
+      alert("Password not matching, try again")
+      password.setValue("")
+      confPassword.setValue("")
+    }
+
+    refresh()
   }
-
-  //?write register login for this page and create login page next
-
+  useEffect(() => {
+    if (statusCode === 200) window.location.href = "/login"
+  }, [statusCode])
   return (
     <div
       className="w-full h-screen overflow-hidden relative flex items-center justify-center bg-gradient-to-tl
@@ -39,27 +55,33 @@ const Register: FC = () => {
         onSubmit={submitHandler}
       >
         <h3 className="xl:my-6 text-4xl xl:text-6xl font-bold ">Register</h3>
-        <FormInput type="text" state={name}>
-          Name
-        </FormInput>
-        <FormInput type="email" state={email}>
-          Email
-        </FormInput>
-        <FormInput type="password" state={password}>
-          Password
-        </FormInput>
-        <FormInput type="password" state={confPassword}>
-          Confirm Password
-        </FormInput>
-        <p className="mt-5 sm:text-2xl">
-          <span>Already have an account?</span>
-          <Link to="/login">
-            <span className="ml-1 text-sec underline underline-offset-2">Login</span>
-          </Link>
-        </p>
-        <span className="mt-5">
-          <ButtonPrime>Register</ButtonPrime>
-        </span>
+        {loading ? (
+          <span className="animate-spin">{loadingArrow}</span>
+        ) : (
+          <>
+            <FormInput type="text" state={name}>
+              Name
+            </FormInput>
+            <FormInput type="email" state={email}>
+              Email
+            </FormInput>
+            <FormInput type="password" state={password}>
+              Password
+            </FormInput>
+            <FormInput type="password" state={confPassword}>
+              Confirm Password
+            </FormInput>
+            <p className="mt-5 sm:text-2xl">
+              <span>Already have an account?</span>
+              <Link to="/login">
+                <span className="ml-1 text-sec underline underline-offset-2">Login</span>
+              </Link>
+            </p>
+            <span className="mt-5">
+              <ButtonPrime>Register</ButtonPrime>
+            </span>
+          </>
+        )}
       </form>
     </div>
   )

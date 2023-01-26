@@ -6,7 +6,7 @@ const useInput = (input: any) => {
       setValue(event.target.value)
     }
 
-  return { value, changeHandler }
+  return { value, changeHandler, setValue }
 }
 
 export default useInput

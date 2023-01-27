@@ -25,14 +25,17 @@ const Home: FC = () => {
 
         <main className="">
           <div className="relative flex flex-col items-center xl:items-start">
-            <h1 className="mt-16 sm:mt-20 xl:mt-28 text-5xl sm:text-7xl text-center font-bold z-10">Welcome to Keeper.com</h1>
+            <h1 className="mt-16 sm:mt-20 xl:mt-28 text-5xl sm:text-7xl text-center font-bold z-10">
+              Welcome to Keeper.com
+            </h1>
             <p
               className="mt-12 sm:mt-14 xl:mt-16 text-center xl:text-left xl:w-6/12 xl:leading-10
              text-xl sm:text-3xl font-semibold z-10"
             >
               <q>
-                Keeper, the task master of your dreams, where productivity and organization unite. Achieve your goals and unlock your
-                potential with our intuitive and feature-rich platform.
+                Keeper, the task master of your dreams, where productivity and
+                organization unite. Achieve your goals and unlock your potential
+                with our intuitive and feature-rich platform.
               </q>
             </p>
             <span className="my-10">

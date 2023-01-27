@@ -1,43 +1,23 @@
 import { useEffect, useState } from "react"
+import { FetchReturn, Props } from "../module/interface"
 
-interface BaseProps {
-  url: string
-  start: boolean
-}
+const getUrl = (route: string): string =>
+  new URL(route, import.meta.env.VITE_API_URL).href
 
-type GetProps = {
-  method: "GET" | "HEAD"
-  data?: never
-}
-
-type PostProps = {
-  method: "POST" | "PUT" | "DELETE"
-  data: object
-}
-
-type ConditionalProp = GetProps | PostProps
-
-type Props = BaseProps & ConditionalProp
-
-type FetchReturn = {
-  data: object | undefined
-  loading: boolean
-  refresh: () => void
-  statusCode: number
-}
-
-const useFetch = ({ url, method, data, start }: Props): FetchReturn => {
+const useFetch = ({ route, method, data, start }: Props): FetchReturn => {
   const [result, setResult] = useState<object>(),
     [loading, setLoading] = useState<boolean>(false),
     [statusCode, setStatusCode] = useState<number>(-1)
 
   const fetchData = async () => {
-    console.log(data)
     if (loading) return
     setLoading(true)
+
+    const url = getUrl(route)
+
     try {
       const response = await fetch(url, {
-        method,
+        method: method,
         headers:
           data === undefined
             ? {}
@@ -51,6 +31,7 @@ const useFetch = ({ url, method, data, start }: Props): FetchReturn => {
       const json = await response.json()
       setResult(json)
     } catch (err) {
+      console.log("%c" + err, "color:red;font-size:3rem;")
       setResult({})
     }
     setLoading(false)
@@ -64,7 +45,7 @@ const useFetch = ({ url, method, data, start }: Props): FetchReturn => {
     fetchData()
   }
 
-  return { loading, refresh, statusCode, data }
+  return { loading, refresh, statusCode, data: result }
 }
 
 export default useFetch

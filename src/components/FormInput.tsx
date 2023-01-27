@@ -18,8 +18,8 @@ const FormInput: FC<props> = ({ children, state, type }) => {
         {children}
       </label>
       <input
-        className="w-full mb-5 px-4 py-2 border-b-2 rounded-lg outline-none
-         text-xl border-b-sec bg-smokewhite accent-sec"
+        className="w-full mb-5 px-4 py-2 border-b-[3px] focus:border-b-[6px] rounded-lg outline-none
+         text-xl border-sec focus:border-prime  bg-smokewhite accent-sec transition-all duration-200 ease-linear"
         type={type}
         value={state.value}
         onChange={state.changeHandler}

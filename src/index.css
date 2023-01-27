@@ -9,7 +9,7 @@ body {
 }
 
 ::selection {
-  @apply bg-prime;
+  @apply bg-prime text-third;
 }
 
 input {
